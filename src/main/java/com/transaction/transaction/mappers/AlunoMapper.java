@@ -10,6 +10,7 @@ public class AlunoMapper {
 	public Aluno toEntity(AlunoDTO dto) {
 		return Aluno.builder()
 				.documento( dto.getDocumento() )
+				.nome(dto.getNome())
 				.id( dto.getId() )
 				.build();
 	}

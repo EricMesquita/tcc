@@ -7,6 +7,6 @@ spring:
   datasource:
     username: user
     password: password
-    url: jdbc:postgresql://database:5433/transaction
+    url: jdbc:postgresql://localhost:5433/transaction
     driver-class-name: org.postgresql.Driver
 

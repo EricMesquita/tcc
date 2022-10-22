@@ -9,6 +9,8 @@ import com.transaction.transaction.repositories.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -30,6 +32,9 @@ public class AlunoService {
 		return mapper.toDTO( aluno );
 	}
 
+	public boolean verifyIfExistsAluno(Long alunoId) {
+		return repository.findById(alunoId).isPresent();
+	}
 	private boolean verifyIfExistsAlreadyAluno(AlunoDTO alunoDTO) {
 		return ofNullable( repository.findByDocument( alunoDTO.getDocumento() ) )
 				.isPresent();
