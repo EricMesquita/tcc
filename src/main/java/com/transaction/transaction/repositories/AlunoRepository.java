@@ -11,5 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
 	@Query("select a from Aluno a where a.documento = :documentNumber")
-	Account findByDocument(@Param("documentNumber") String documentNumber);
+	Aluno findByDocument(@Param("documentNumber") String documentNumber);
+
 }

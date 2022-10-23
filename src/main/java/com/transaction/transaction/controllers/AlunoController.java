@@ -1,6 +1,7 @@
 package com.transaction.transaction.controllers;
 
 import com.transaction.transaction.dto.AlunoDTO;
+import com.transaction.transaction.dto.AlunoEMatriculasDTO;
 import com.transaction.transaction.services.AlunoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +23,10 @@ public class AlunoController {
 	@GetMapping("/{accountId}")
 	private AlunoDTO find(@PathVariable( "accountId" ) Long accountId) {
 		return alunoService.find( accountId );
+	}
+
+	@GetMapping("/{accountId}/matricula")
+	private AlunoEMatriculasDTO findMatriculas(@PathVariable( "accountId" ) Long accountId) {
+		return alunoService.findMatriculas( accountId );
 	}
 }

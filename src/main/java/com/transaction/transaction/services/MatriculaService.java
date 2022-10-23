@@ -9,6 +9,8 @@ import com.transaction.transaction.repositories.MatriculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -43,7 +45,6 @@ public class MatriculaService {
 	}
 
 	private boolean verifyIfExistsMatricula(MatriculaDTO matriculaDTO) {
-		return ofNullable(repository.findByAlunoIdAndMateriaID(matriculaDTO.getAlunoId(), matriculaDTO.getMateriaId())).isPresent();
+		return ofNullable(repository.findByAlunoAndMateria(matriculaDTO.getAlunoId(), matriculaDTO.getMateriaId())).isPresent();
 	}
-
 }

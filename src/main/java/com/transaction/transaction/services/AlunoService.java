@@ -1,14 +1,19 @@
 package com.transaction.transaction.services;
 
 import com.transaction.transaction.dto.AlunoDTO;
+import com.transaction.transaction.dto.AlunoEMatriculasDTO;
+import com.transaction.transaction.dto.MatriculaDTO;
 import com.transaction.transaction.entities.Aluno;
+import com.transaction.transaction.entities.Matricula;
 import com.transaction.transaction.exceptions.AccountException;
 import com.transaction.transaction.exceptions.AlunoException;
+import com.transaction.transaction.exceptions.MatriculaException;
 import com.transaction.transaction.mappers.AlunoMapper;
 import com.transaction.transaction.repositories.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -21,6 +26,9 @@ public class AlunoService {
 
 	@Autowired
 	private AlunoRepository repository;
+
+	@Autowired
+	private MatriculaService matriculaService;
 
 	@Autowired
 	private AlunoMapper mapper;
@@ -44,6 +52,20 @@ public class AlunoService {
 		return ofNullable( alunoId )
 				.map( this::findById )
 				.map( mapper::toDTO )
+				.orElseThrow( () -> new AccountException( ALUNO_NOT_FOUND ) );
+	}
+
+	public AlunoDTO findAndMatriculas(Long alunoId) {
+		return ofNullable( alunoId )
+				.map( this::findById )
+				.map( mapper::toDTO )
+				.orElseThrow( () -> new AccountException( ALUNO_NOT_FOUND ) );
+	}
+
+	public AlunoEMatriculasDTO findMatriculas(Long alunoId) {
+		return ofNullable( alunoId )
+				.map( this::findById )
+				.map( mapper::toDTO2 )
 				.orElseThrow( () -> new AccountException( ALUNO_NOT_FOUND ) );
 	}
 
