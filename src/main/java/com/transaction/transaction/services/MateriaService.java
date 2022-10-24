@@ -3,7 +3,6 @@ package com.transaction.transaction.services;
 import com.transaction.transaction.dto.MateriaDTO;
 import com.transaction.transaction.entities.Materia;
 import com.transaction.transaction.entities.MateriaDependencia;
-import com.transaction.transaction.exceptions.AlunoException;
 import com.transaction.transaction.exceptions.MateriaException;
 import com.transaction.transaction.mappers.MateriaMapper;
 import com.transaction.transaction.repositories.MateriaDependenciaRepository;
@@ -32,25 +31,32 @@ public class MateriaService {
 		if (verifyIfExistsAlreadyMateria( materiaDTO ))
 			throw new MateriaException( DOCUMENT_EXCEPTION_MESSAGE );
 		Materia materia = repository.save( mapper.toEntity( materiaDTO ) );
-		saveMateriaDependencia(materiaDTO, materia);
-		return mapper.toDTO( materia );
+		MateriaDependencia md = saveMateriaDependencia(materiaDTO, materia);
+		MateriaDTO dto = mapper.toDTO( materia );
+		if (md != null) {
+			dto.setMateriaDependencia(md.getMateriaDependenciaId());
+		}
+		return dto;
 	}
 
-	private void saveMateriaDependencia(MateriaDTO materiaDTO, Materia materia) {
-		if (verifyIfExistsAlreadyMateriaDependencia( materiaDTO ))
+	private MateriaDependencia saveMateriaDependencia(MateriaDTO materiaDTO, Materia materia) {
+		if (verifyIfExistsMateria( materiaDTO ))
 			throw new MateriaException( MATERIA_DEPENDENCIA_NOT_FOUND );
 		if (materiaDTO.getMateriaDependencia() != null) {
 			MateriaDependencia materiaDependencia = MateriaDependencia.builder()
 					.materiaId(materia.getId())
-					.materiaDependenciaID(materiaDTO.getMateriaDependencia())
+					.materiaDependenciaId(materiaDTO.getMateriaDependencia())
 					.build();
-			materiaDependenciaRepository.save(materiaDependencia);
+			return materiaDependenciaRepository.save(materiaDependencia);
 		}
+		return null;
 	}
 
-	private boolean verifyIfExistsAlreadyMateriaDependencia(MateriaDTO materiaDTO) {
-		return ofNullable( materiaDependenciaRepository.findById(materiaDTO.getMateriaDependencia()) )
-				.isPresent();
+	private boolean verifyIfExistsMateria(MateriaDTO materiaDTO) {
+		if (materiaDTO.getMateriaDependencia() == null) {
+			return false;
+		}
+		return repository.findById(materiaDTO.getMateriaDependencia()).isEmpty();
 	}
 
 	private boolean verifyIfExistsAlreadyMateria(MateriaDTO materiaDTO) {

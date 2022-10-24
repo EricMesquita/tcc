@@ -7,6 +7,8 @@ import com.transaction.transaction.entities.Aluno;
 import com.transaction.transaction.entities.Matricula;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -38,9 +40,15 @@ public class AlunoMapper {
 	}
 
 	private List<MatriculaDTO> toDTOlist(List<Matricula> matricula) {
-		List<MatriculaDTO> matriculaDTOS = null;
+		List<MatriculaDTO> matriculaDTOS = new ArrayList<>();
 		for (Matricula matricula1 : matricula) {
-			MatriculaDTO dto = MatriculaDTO.builder().finalizado(matricula1.getFinalizado()).descricaoSemestre(matricula1.getDescricaoSemestre()).build();
+			MatriculaDTO dto = MatriculaDTO.builder()
+					.finalizado(matricula1.getFinalizado())
+					.descricaoSemestre(matricula1.getDescricaoSemestre())
+					.id(matricula1.getId())
+					.alunoId(matricula1.getAluno().getId())
+					.materiaId(matricula1.getMateria().getId())
+					.build();
 			matriculaDTOS.add(dto);
 		}
 		return matriculaDTOS;

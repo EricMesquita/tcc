@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface MateriaRepository extends JpaRepository<Materia, Long> {
 
     @Query("select a from Materia a where a.nome = :nome")
-    Account findByNome(@Param("nome") String nome);
+    Materia findByNome(@Param("nome") String nome);
 }

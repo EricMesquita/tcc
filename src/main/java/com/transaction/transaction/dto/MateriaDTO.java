@@ -25,7 +25,6 @@ public class MateriaDTO {
 
 	@JsonProperty("capacidade")
 	@NotNull(message = "A capacidade não pode ser nulo")
-	@NotEmpty(message = "A capacidade não pode ser não vazio")
 	private Long capacidade;
 
 	@JsonProperty("materia_dependencia")

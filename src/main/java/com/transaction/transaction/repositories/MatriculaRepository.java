@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 
-    @Query("select a from Matricula a where a.aluno = :aluno and a.materia = :materia")
-    Matricula findByAlunoAndMateria(@Param("aluno") Long aluno, @Param("materia") Long materia);
+    Matricula findByAlunoIdAndMateriaId(@Param("aluno") Long aluno, @Param("materia") Long materia);
 }

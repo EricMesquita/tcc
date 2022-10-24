@@ -20,12 +20,10 @@ public class MatriculaDTO {
 
 	@JsonProperty("aluno_id")
 	@NotNull(message = "O id do aluno não pode ser nulo")
-	@NotEmpty(message = "O id do aluno não pode ser não vazio")
 	private Long alunoId;
 
 	@JsonProperty("materia_id")
 	@NotNull(message = "A id da matricula não pode ser nulo")
-	@NotEmpty(message = "A id da matricula não pode ser não vazio")
 	private Long materiaId;
 
 	@JsonProperty("descricao_semestre")

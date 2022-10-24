@@ -41,10 +41,13 @@ public class MatriculaService {
 		if (verifyIfExistsMatricula(matriculaDTO))
 			throw new MatriculaException(MATRICULA_EXCEPTION_MESSAGE);
 		Matricula matricula = repository.save( mapper.toEntity( matriculaDTO ) );
-		return mapper.toDTO( matricula );
+		MatriculaDTO dto = mapper.toDTO( matricula );
+		dto.setAlunoId(matriculaDTO.getAlunoId());
+		dto.setMateriaId(matriculaDTO.getMateriaId());
+		return dto;
 	}
 
 	private boolean verifyIfExistsMatricula(MatriculaDTO matriculaDTO) {
-		return ofNullable(repository.findByAlunoAndMateria(matriculaDTO.getAlunoId(), matriculaDTO.getMateriaId())).isPresent();
+		return ofNullable(repository.findByAlunoIdAndMateriaId(matriculaDTO.getAlunoId(), matriculaDTO.getMateriaId())).isPresent();
 	}
 }
