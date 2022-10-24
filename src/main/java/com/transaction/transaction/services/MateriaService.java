@@ -2,8 +2,10 @@ package com.transaction.transaction.services;
 
 import com.transaction.transaction.dto.MateriaDTO;
 import com.transaction.transaction.entities.Materia;
-import com.transaction.transaction.exceptions.AlunoException;
+import com.transaction.transaction.entities.MateriaDependencia;
+import com.transaction.transaction.exceptions.MateriaException;
 import com.transaction.transaction.mappers.MateriaMapper;
+import com.transaction.transaction.repositories.MateriaDependenciaRepository;
 import com.transaction.transaction.repositories.MateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +16,47 @@ import static java.util.Optional.ofNullable;
 public class MateriaService {
 
 	private static final String DOCUMENT_EXCEPTION_MESSAGE = "Já existe uma materia cadastrada!";
-	private static final String ALUNO_NOT_FOUND = "A materia não foi encontrada";
+	private static final String MATERIA_DEPENDENCIA_NOT_FOUND = "A materia não foi encontrada";
 
 	@Autowired
 	private MateriaRepository repository;
+
+	@Autowired
+	private MateriaDependenciaRepository materiaDependenciaRepository;
 
 	@Autowired
 	private MateriaMapper mapper;
 
 	public MateriaDTO create(MateriaDTO materiaDTO) {
 		if (verifyIfExistsAlreadyMateria( materiaDTO ))
-			throw new AlunoException( DOCUMENT_EXCEPTION_MESSAGE );
+			throw new MateriaException( DOCUMENT_EXCEPTION_MESSAGE );
 		Materia materia = repository.save( mapper.toEntity( materiaDTO ) );
-		return mapper.toDTO( materia );
+		MateriaDependencia md = saveMateriaDependencia(materiaDTO, materia);
+		MateriaDTO dto = mapper.toDTO( materia );
+		if (md != null) {
+			dto.setMateriaDependencia(md.getMateriaDependenciaId());
+		}
+		return dto;
+	}
+
+	private MateriaDependencia saveMateriaDependencia(MateriaDTO materiaDTO, Materia materia) {
+		if (verifyIfExistsMateria( materiaDTO ))
+			throw new MateriaException( MATERIA_DEPENDENCIA_NOT_FOUND );
+		if (materiaDTO.getMateriaDependencia() != null) {
+			MateriaDependencia materiaDependencia = MateriaDependencia.builder()
+					.materiaId(materia.getId())
+					.materiaDependenciaId(materiaDTO.getMateriaDependencia())
+					.build();
+			return materiaDependenciaRepository.save(materiaDependencia);
+		}
+		return null;
+	}
+
+	private boolean verifyIfExistsMateria(MateriaDTO materiaDTO) {
+		if (materiaDTO.getMateriaDependencia() == null) {
+			return false;
+		}
+		return repository.findById(materiaDTO.getMateriaDependencia()).isEmpty();
 	}
 
 	private boolean verifyIfExistsAlreadyMateria(MateriaDTO materiaDTO) {
@@ -34,16 +64,8 @@ public class MateriaService {
 				.isPresent();
 	}
 
-//	public AlunoDTO find(Long alunoId) {
-//		return ofNullable( alunoId )
-//				.map( this::findById )
-//				.map( mapper::toDTO )
-//				.orElseThrow( () -> new AccountException( ALUNO_NOT_FOUND ) );
-//	}
-//
-//	private Aluno findById(Long accountId) {
-//		return repository
-//				.findById( accountId )
-//				.orElse( null );
-//	}
+	public boolean verifyIfExistsMateria(Long materiaId) {
+		return  repository.findById( materiaId )
+				.isPresent();
+	}
 }

@@ -1,63 +1,118 @@
-# Transaction
-Projeto para rotina de transações financeira
+# Matricula
+Projeto para matricula de uma faculdad
 
 # Funcionalidades
 
-Em transaction é possivel
- * Cadastrar uma conta
- * Visualizar as informações de uma conta cadastrada
- * Realizar a uma transação
+No projeto é possivel
+ * Cadastrar um aluno
+ * Visualizar as informações de um aluno cadastrada
+ * Visualizar as informações de matricula um aluno
+ * Cadastrar uma materia
+ * Realizar a matricula
 
 # Pré-requisitos
 - [Maven](https://maven.apache.org/install.html)
 - [Docker](https://docs.docker.com/install/) e [Docker-compose](https://docs.docker.com/compose/install/)
 - [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 
-# Como executar
-
-###### Iniciar
-```
-make start
-```
-
-###### Executar testes
-```
-make test
-```
-
 # Endpoints
 
-> POST /accounts
+> POST /v1/aluno
 
 Request Body: 
 ```
-{ 
-    "document_number": "12345678900" 
-} 
+{
+	"nome": "Guilherme",
+	"documento" : "121271465"	
+}
 ```
 Response Body: 
 ```
 {
-    "account_id": 1,
-    "document_number": "43242"
+	"id": 5,
+	"nome": "Guilherme",
+	"documento": "121271465"
 }
 ```
 
-> GET /accounts/:accountId
+> GET /v1/aluno/:alunoID
 
 Response Body: 
 ```
-{ 
-    "document_number": "12345678900" 
-} 
+{
+	"id": 2,
+	"nome": "Guilherme",
+	"documento": "121271"
+}
 ```
 
->POST /transactions
+
+> GET /v1/aluno/:alunoID/matricula
+
+Response Body:
+```
+{
+	"matriculaDTO": [
+		{
+			"id": 3,
+			"aluno_id": 2,
+			"materia_id": 2,
+			"descricao_semestre": "SM/6",
+			"finalizado": false
+		},
+		{
+			"id": 4,
+			"aluno_id": 2,
+			"materia_id": 3,
+			"descricao_semestre": "SM/6",
+			"finalizado": false
+		}
+	],
+	"id": 2,
+	"nome": "Guilherme",
+	"documento": "121271"
+}
+
+```
+
+>POST /v1/materia
 Request Body: 
 ```
-{ 
-    "account_id": 1, 
-    "operation_type_id": 4,
-    "amount": 123.45 
+{
+	"nome": "Calculo 8",
+	"capacidade": 35,
+	"materia_dependencia": 2
+}
+```
+
+Response Body:
+```
+{
+	"id": 8,
+	"nome": "Calculo 8",
+	"capacidade": 35,
+	"materia_dependencia": 2
+}
+```
+
+>POST /v1/matricula
+Request Body:
+```
+{
+	"aluno_id": 2,
+	"materia_id": 3,
+	"descricao_semestre": "SM/6",
+	"finalizado": false
+}
+```
+
+Response Body:
+```
+{
+	"id": 4,
+	"aluno_id": 2,
+	"materia_id": 3,
+	"descricao_semestre": "SM/6",
+	"finalizado": false
 }
 ```

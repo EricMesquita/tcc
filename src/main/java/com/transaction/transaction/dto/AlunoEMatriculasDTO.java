@@ -8,25 +8,26 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MateriaDTO {
+public class AlunoEMatriculasDTO {
 
 	@JsonProperty("id")
 	private Long id;
 
 	@JsonProperty("nome")
-	@NotNull(message = "O nome da materia não pode ser nulo")
-	@NotEmpty(message = "O nome da materia não pode ser não vazio")
+	@NotNull(message = "O nome não pode ser nulo")
+	@NotEmpty(message = "O nome não pode ser não vazio")
 	private String nome;
 
-	@JsonProperty("capacidade")
-	@NotNull(message = "A capacidade não pode ser nulo")
-	private Long capacidade;
+	@JsonProperty("documento")
+	@NotNull(message = "O número do documento não pode ser nulo")
+	@NotEmpty(message = "O número do documento não pode ser não vazio")
+	private String documento;
 
-	@JsonProperty("materia_dependencia")
-	private Long materiaDependencia;
+	private List<MatriculaDTO> matriculaDTO;
 }

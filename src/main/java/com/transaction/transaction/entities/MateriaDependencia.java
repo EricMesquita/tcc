@@ -16,10 +16,10 @@ import javax.persistence.*;
 public class MateriaDependencia {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_matricula_dependencia")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_materia_dependencia")
 	private Long id;
 
 	private Long materiaId;
 
-	private Long materiaDependenciaID;
+	private Long materiaDependenciaId;
 }
