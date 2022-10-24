@@ -1,5 +1,5 @@
 # Matricula
-Projeto para matricula de uma faculdad
+Projeto para matricula de uma faculdade
 
 # Funcionalidades
 

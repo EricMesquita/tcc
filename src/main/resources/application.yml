@@ -3,11 +3,11 @@ environment:
   status: OK
 spring:
   application:
-    name: transaction
+    name: matricula
   datasource:
     username: user
     password: password
-    url: jdbc:postgresql://localhost:5433/transaction
+    url: jdbc:postgresql://localhost:5433/matricula
     driver-class-name: org.postgresql.Driver
 
 #================================================

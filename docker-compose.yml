@@ -2,10 +2,10 @@ version: '3.1'
 services:
   database:
     image: postgres:14.1-alpine
-    container_name: transaction
+    container_name: matricula
     restart: always
     environment:
-      - POSTGRES_DB=transaction
+      - POSTGRES_DB=matricula
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
 #      - POSTGRES_HOST_AUTH_METHOD="trust"
