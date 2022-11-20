@@ -32,12 +32,12 @@ public class MatriculaService {
 	private MatriculaMapper mapper;
 
 	public MatriculaDTO create(MatriculaDTO matriculaDTO) {
-		if (!alunoService.verifyIfExistsAluno( matriculaDTO.getAlunoId() ))
+		/*if (!alunoService.verifyIfExistsAluno( matriculaDTO.getAlunoId() ))
 			throw new AlunoException( ALUNO_NOT_FOUND );
 		if (!materiaService.verifyIfExistsMateria(matriculaDTO.getMateriaId()))
 			throw new AlunoException( MATERIA_NOT_FOUND );
 		if (verifyIfExistsMatricula(matriculaDTO))
-			throw new MatriculaException(MATRICULA_EXCEPTION_MESSAGE);
+			throw new MatriculaException(MATRICULA_EXCEPTION_MESSAGE);*/
 		Matricula matricula = repository.save( mapper.toEntity( matriculaDTO ) );
 		MatriculaDTO dto = mapper.toDTO( matricula );
 		dto.setAlunoId(matriculaDTO.getAlunoId());

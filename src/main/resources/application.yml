@@ -9,6 +9,8 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5433/matricula
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 1000
 
 #================================================
 # Actuator

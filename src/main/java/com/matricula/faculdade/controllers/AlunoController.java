@@ -4,6 +4,7 @@ import com.matricula.faculdade.dto.AlunoDTO;
 import com.matricula.faculdade.dto.AlunoEMatriculasDTO;
 import com.matricula.faculdade.services.AlunoService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
