@@ -27,8 +27,8 @@ public class AlunoService {
 	private AlunoMapper mapper;
 
 	public AlunoDTO create(AlunoDTO alunoDTO) {
-		if (verifyIfExistsAlreadyAluno( alunoDTO ))
-			throw new AlunoException( DOCUMENT_EXCEPTION_MESSAGE );
+		//if (verifyIfExistsAlreadyAluno( alunoDTO ))
+		//	throw new AlunoException( DOCUMENT_EXCEPTION_MESSAGE );
 		Aluno aluno = repository.save( mapper.toEntity( alunoDTO ) );
 		return mapper.toDTO( aluno );
 	}

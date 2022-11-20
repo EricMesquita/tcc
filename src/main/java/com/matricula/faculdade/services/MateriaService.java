@@ -28,8 +28,8 @@ public class MateriaService {
 	private MateriaMapper mapper;
 
 	public MateriaDTO create(MateriaDTO materiaDTO) {
-		if (verifyIfExistsAlreadyMateria( materiaDTO ))
-			throw new MateriaException( DOCUMENT_EXCEPTION_MESSAGE );
+		//if (verifyIfExistsAlreadyMateria( materiaDTO ))
+		//	throw new MateriaException( DOCUMENT_EXCEPTION_MESSAGE );
 		Materia materia = repository.save( mapper.toEntity( materiaDTO ) );
 		MateriaDependencia md = saveMateriaDependencia(materiaDTO, materia);
 		MateriaDTO dto = mapper.toDTO( materia );
